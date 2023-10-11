@@ -25,6 +25,7 @@ import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import com.lk.captcha.CaptchaErrorException;
 import com.lk.captcha.CaptchaMetadata;
 import com.lk.captcha.CaptchaSolver;
+import com.lk.jucesp.bots.MainApplication;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
 
 import java.io.IOException;
@@ -36,13 +37,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
 
 public abstract class SPJucespTemplate {
 
-    private static final String jucespUrl = "https://www.jucesponline.sp.gov.br";
+    public static final Logger logger = Logger.getLogger(SPJucespTemplate.class.getName());
+    private static final String jucespUrl = "https://jucesponline.sp.gov.br/";
     private static final int capFail = 100;
     protected final WebClient webClient;
     private final CaptchaSolver captchaSolver;
@@ -60,7 +63,7 @@ public abstract class SPJucespTemplate {
             SPJucespCredentials credentials = SPJucespCredentialsGenerator.getInstance().getCredentials();
             String cpf = credentials.getCpf();
             String password = credentials.getPassword();
-//            logger.info(format("%s Credenciales de jucesp usadas ---- %s", cpf, password));
+            logger.info(format("%s Credenciales de jucesp usadas ---- %s", cpf, password));
 
             HtmlTable resultTable = null;
             var r = new Random();
@@ -99,7 +102,7 @@ public abstract class SPJucespTemplate {
 
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
-                } else {
+                }else {
                     flag = false;
                     resultTable = (HtmlTable) page.getElementById("ctl00_cphContent_gdvResultadoBusca_gdvContent");
                 }
@@ -166,7 +169,7 @@ public abstract class SPJucespTemplate {
                 checkCapFail(failCount, socialReason);
             }
         } catch (Exception e) {
-//            logger.error(format("%s -- social reason: %s", e.getMessage(), socialReason));
+            logger.info(format("%s -- error social reason: %s", e.getMessage(), socialReason));
             throw new CannotGetJucespFileException(e.getMessage());
         }
 
@@ -195,7 +198,7 @@ public abstract class SPJucespTemplate {
         if (image == null)
             return null;
 
-        URL url = new URL(format("%s/%s", jucespUrl, image.getSrcAttribute()));
+        URL url = new URL(format("%s%s", jucespUrl, image.getSrcAttribute()));
         return captchaSolver.solve(url.openStream());
     }
 
