@@ -16,22 +16,10 @@ public class MainApplication {
 
     public static final Logger LOGGER = Logger.getLogger(MainApplication.class.getName());
 
-    public static void main(String[] args) throws CannotGetJucespFileException, IOException {
+    public static void main(String[] args) throws CannotGetJucespFileException{
         LOGGER.info("Running");
-
-        /*DetectText detectTextTool = new DetectText();
-        String sourceImage = args[0] ;
-        Region region = Region.US_EAST_1;
-        RekognitionClient rekClient = RekognitionClient.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create())
-                .build();
-        String detectedText  = detectTextTool.detectTextLabels(rekClient, sourceImage ).trim();
-        LOGGER.info("Word: "+detectedText);
-
-        rekClient.close();*/
-        ImageTools imgTools = new ImageTools();
-        String sourceImage = args[0] ;
-        imgTools.saveImage(sourceImage);
+        String socialReason = args[0] ;
+        SPJucespBot spJucespBot = new SPJucespBot(new SPJucespBuilderImpl());
+        spJucespBot.getArchivedDocuments(socialReason);
     }
 }

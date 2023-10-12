@@ -11,13 +11,13 @@ public class SPJucespRegistration extends SPJucespTemplate {
 
     protected static SPJucespTemplate INSTANCE;
 
-    private SPJucespRegistration(CaptchaSolver captchaSolver) {
-        super(captchaSolver);
+    private SPJucespRegistration() {
+
     }
 
-    static SPJucespTemplate getInstance(CaptchaSolver captchaSolver) {
+    static SPJucespTemplate getInstance() {
         if (INSTANCE == null)
-            INSTANCE = new SPJucespRegistration(captchaSolver);
+            INSTANCE = new SPJucespRegistration();
 
         return INSTANCE;
     }

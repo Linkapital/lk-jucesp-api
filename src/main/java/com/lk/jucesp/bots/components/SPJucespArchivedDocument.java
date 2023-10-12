@@ -28,13 +28,12 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
 
     private static SPJucespTemplate instance;
 
-    private SPJucespArchivedDocument(CaptchaSolver captchaSolver) {
-        super(captchaSolver);
+    private SPJucespArchivedDocument() {
     }
 
-    static SPJucespTemplate getInstance(CaptchaSolver captchaSolver) {
+    static SPJucespTemplate getInstance() {
         if (instance == null)
-            instance = new SPJucespArchivedDocument(captchaSolver);
+            instance = new SPJucespArchivedDocument();
 
         return instance;
     }

@@ -37,7 +37,6 @@ public class DetectText {
 
     // snippet-start:[rekognition.java2.detect_text.main]
     public static String detectTextLabels(RekognitionClient rekClient, String sourceImage) {
-
         try {
             InputStream sourceStream = new FileInputStream(sourceImage);
             SdkBytes sourceBytes = SdkBytes.fromInputStream(sourceStream);
@@ -51,14 +50,13 @@ public class DetectText {
 
             DetectTextResponse textResponse = rekClient.detectText(textRequest);
             List<TextDetection> textCollection = textResponse.textDetections();
-            //System.out.println("Detected lines and words");
             return textCollection.get(0).detectedText();
 
         } catch (RekognitionException | FileNotFoundException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-        return "None";
+        return null;
     }
     // snippet-end:[rekognition.java2.detect_text.main]
 }

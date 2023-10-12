@@ -22,7 +22,7 @@ import java.net.URL;
 @Setter
 public class ImageTools {
 
-    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException {
+    public BufferedImage redimensionImage(BufferedImage originalImage, int targetWidth, int targetHeight){
         BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = resizedImage.createGraphics();
         graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
@@ -30,8 +30,7 @@ public class ImageTools {
         return resizedImage;
     }
 
-    public void saveImage(String urlParam) throws IOException {
-        URL url = new URL(urlParam);
+    public void saveImage(URL url) throws IOException {
         InputStream in = new BufferedInputStream(url.openStream());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -46,5 +45,13 @@ public class ImageTools {
         FileOutputStream fos = new FileOutputStream("captcha.jpg");
         fos.write(response);
         fos.close();
+    }
+
+    public void resizeAndSave(String urlParam) throws IOException {
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(urlParam));
+        BufferedImage originalImage = ImageIO.read(bis);
+        BufferedImage modified = redimensionImage(originalImage,288,80);
+        File outputfile = new File(urlParam);
+        ImageIO.write(modified, "jpg", outputfile);
     }
 }

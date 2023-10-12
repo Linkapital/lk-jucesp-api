@@ -10,13 +10,12 @@ public class SPJucespSimplifiedCertification extends SPJucespTemplate {
 
     private static SPJucespTemplate instance;
 
-    private SPJucespSimplifiedCertification(CaptchaSolver captchaSolver) {
-        super(captchaSolver);
+    private SPJucespSimplifiedCertification() {
     }
 
-    static SPJucespTemplate getInstance(CaptchaSolver captchaSolver) {
+    static SPJucespTemplate getInstance() {
         if (instance == null)
-            instance = new SPJucespSimplifiedCertification(captchaSolver);
+            instance = new SPJucespSimplifiedCertification();
 
         return instance;
     }

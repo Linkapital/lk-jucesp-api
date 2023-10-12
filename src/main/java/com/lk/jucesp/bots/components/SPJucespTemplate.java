@@ -22,11 +22,12 @@ import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.gargoylesoftware.htmlunit.html.parser.HTMLParserListener;
 import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
-import com.lk.captcha.CaptchaErrorException;
-import com.lk.captcha.CaptchaMetadata;
-import com.lk.captcha.CaptchaSolver;
-import com.lk.jucesp.bots.MainApplication;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
+import com.lk.jucesp.bots.util.DetectText;
+import com.lk.jucesp.bots.util.ImageTools;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.rekognition.RekognitionClient;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -48,11 +49,12 @@ public abstract class SPJucespTemplate {
     private static final String jucespUrl = "https://jucesponline.sp.gov.br/";
     private static final int capFail = 100;
     protected final WebClient webClient;
-    private final CaptchaSolver captchaSolver;
+    private final ImageTools imageTools;
+    private String localFile = "captcha.jpg";
 
-    protected SPJucespTemplate(CaptchaSolver captchaSolver) {
-        this.captchaSolver = captchaSolver;
+    protected SPJucespTemplate() {
         this.webClient = new WebClient();
+        this.imageTools = new ImageTools();
     }
 
     public List<DocumentMetadata> getDocuments(String socialReason) throws CannotGetJucespFileException {
@@ -82,7 +84,7 @@ public abstract class SPJucespTemplate {
             page = webClient.getPage(submitForm.getWebRequest(searchButton));
 
             boolean flag = true;
-            CaptchaMetadata captcha;
+            String captcha;
             HtmlTextInput captcha1Input;
             HtmlSubmitInput captcha1SubmitInput;
             HtmlForm captcha1Form;
@@ -90,7 +92,7 @@ public abstract class SPJucespTemplate {
                 captcha = getCaptcha(page);
                 if (captcha != null) {
                     captcha1Input = page.getFirstByXPath("//input[@name='ctl00$cphContent$gdvResultadoBusca$CaptchaControl1']");
-                    captcha1Input.setText(captcha.getText());
+                    captcha1Input.setText(captcha);
                     captcha1SubmitInput = (HtmlSubmitInput) page.getElementById("ctl00_cphContent_gdvResultadoBusca_btEntrar");
                     captcha1Form = captcha1SubmitInput.getEnclosingForm();
 
@@ -98,7 +100,8 @@ public abstract class SPJucespTemplate {
                     resultTable = (HtmlTable) page.getElementById("ctl00_cphContent_gdvResultadoBusca_gdvContent");
 
                     if (Objects.isNull(resultTable))
-                        captchaSolver.report(captcha.getId());
+                        //captchaSolver.report(captcha.getId());
+                        logger.info("No documents for this company");
 
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
@@ -145,7 +148,7 @@ public abstract class SPJucespTemplate {
                         passwordInput.setText(password);
                         captchaInput = page.getFirstByXPath("//input[@name='ctl00$cphContent$CaptchaControl1']");
                         enterSubmitButton = (HtmlSubmitInput) page.getElementById("ctl00_cphContent_btEntrar");
-                        captchaInput.setText(captcha.getText());
+                        captchaInput.setText(captcha);
                         captcha1Form2 = enterSubmitButton.getEnclosingForm();
                         pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
                         results = getDocuments(pageResult);
@@ -153,7 +156,8 @@ public abstract class SPJucespTemplate {
                         if (Objects.isNull(results) || !results.isEmpty()) {
                             flag = false;
                         } else {
-                            captchaSolver.report(captcha.getId());
+                            //captchaSolver.report(captcha.getId());
+                            logger.info("Other error for the captcha");
                             page = (HtmlPage) pageResult;
                             failCount++;
                             Thread.sleep(3000L + r.nextInt(2000));
@@ -193,13 +197,28 @@ public abstract class SPJucespTemplate {
         return results;
     }
 
-    private CaptchaMetadata getCaptcha(HtmlPage page) throws IOException, CaptchaErrorException {
+    private String getCaptcha(HtmlPage page) throws IOException{
         HtmlImage image = page.getFirstByXPath("//img[contains(@src,'Captcha')]");
         if (image == null)
             return null;
 
         URL url = new URL(format("%s%s", jucespUrl, image.getSrcAttribute()));
-        return captchaSolver.solve(url.openStream());
+        return getDetectedText(url);
+    }
+
+    private String getDetectedText(URL url) throws IOException {
+        imageTools.saveImage(url);
+        imageTools.resizeAndSave(localFile);
+        DetectText detectTextTool = new DetectText();
+        Region region = Region.US_EAST_1;
+        RekognitionClient rekClient = RekognitionClient.builder()
+                .region(region)
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+        String detectedText  = detectTextTool.detectTextLabels(rekClient, localFile ).replaceAll("\\s+","");
+        logger.info("Word: "+detectedText);
+        rekClient.close();
+        return detectedText;
     }
 
     private void checkCapFail(int failCount, String socialReason) throws CannotGetJucespFileException {
