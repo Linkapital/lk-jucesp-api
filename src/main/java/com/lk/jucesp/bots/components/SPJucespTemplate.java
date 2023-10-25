@@ -101,7 +101,7 @@ public abstract class SPJucespTemplate {
 
                     if (Objects.isNull(resultTable))
                         //captchaSolver.report(captcha.getId());
-                        logger.info("No documents for this company");
+                        logger.info("Error with the detected captcha");
 
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
