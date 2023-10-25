@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.lk'
 version = '0.0.1'
-sourceCompatibility = '17'
+sourceCompatibility = "17"
 
 configurations {
     compileOnly {

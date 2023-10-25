@@ -1,15 +1,7 @@
 package com.lk.jucesp.bots;
 
-import com.lk.captcha.CaptchaSolver;
 import com.lk.jucesp.bots.components.*;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
-import com.lk.jucesp.bots.util.DetectText;
-import com.lk.jucesp.bots.util.ImageTools;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.rekognition.RekognitionClient;
-
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class MainApplication {
