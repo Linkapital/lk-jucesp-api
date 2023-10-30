@@ -119,7 +119,7 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
         HtmlSubmitInput okSubmitButton = (HtmlSubmitInput) htmlPage.getElementById(
                 "ctl00_cphContent_frmPreVisualiza_btnEmitir");
-        HtmlForm submitForm = okSubmitButton.getEnclosingForm();
+
         Iterator iteratorTable = documentsTable.getChildElements().iterator();
         HtmlTableBody tableBody = (HtmlTableBody) iteratorTable.next();
         Iterator rowIterator = tableBody.getChildElements().iterator();
@@ -131,8 +131,9 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
             DomElement element = radioCellIterator.next();
             if(element instanceof HtmlRadioButtonInput radioButtonInput && radioButtonInput.getAttribute("id").equals("ctl00_cphContent_frmPreVisualiza_rblTipoDocumento_3")){
                 radioButtonInput.setChecked(true);
-                HtmlPage documentPage = webClient.getPage(submitForm.getWebRequest(okSubmitButton));
-                return documentPage;
+                HtmlPage tempPage = okSubmitButton.click();
+                ///HtmlPage documentPage = webClient.getPage(submitForm.getWebRequest(okSubmitButton));
+                return tempPage;
             }
         }
         return htmlPage;
