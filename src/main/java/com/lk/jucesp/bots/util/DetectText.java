@@ -50,13 +50,14 @@ public class DetectText {
 
             DetectTextResponse textResponse = rekClient.detectText(textRequest);
             List<TextDetection> textCollection = textResponse.textDetections();
-            return textCollection.get(0).detectedText();
+            if(!textCollection.isEmpty())
+                return textCollection.get(0).detectedText();
+            else
+                return null;
 
         } catch (RekognitionException | FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
+            return null;
         }
-        return null;
     }
     // snippet-end:[rekognition.java2.detect_text.main]
 }

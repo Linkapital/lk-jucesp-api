@@ -101,7 +101,7 @@ public abstract class SPJucespTemplate {
 
                     if (Objects.isNull(resultTable))
                         //captchaSolver.report(captcha.getId());
-                        logger.info("Error with the detected captcha");
+                        logger.info("Error with the detected text from captcha");
 
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
@@ -122,48 +122,65 @@ public abstract class SPJucespTemplate {
             HtmlTableCell tableCell = row.getCell(0);
             Iterator cellIterator = tableCell.getChildElements().iterator();
             HtmlAnchor documentLink = (HtmlAnchor) cellIterator.next();
-            Page linkPage = getDocumentPage(documentLink);
+            String nire = documentLink.getVisibleText();
+            //Page linkPage = getDocumentPage(documentLink);
+            //page = (HtmlPage) linkPage;
 
-            if (linkPage instanceof UnexpectedPage unexpected) {
-                results.add(DocumentMetadata
-                        .builder()
-                        .data(unexpected.getInputStream())
-                        .build());
+            if (nire =="") {
+                throw new CannotGetJucespFileException("No NIRE found for this social reason");
             } else {
-                page = (HtmlPage) linkPage;
-                Page pageResult;
+                HtmlPage pageResult = getPageFromNire(nire);
                 flag = true;
-
-                HtmlTextInput cpfInput;
-                HtmlPasswordInput passwordInput;
-                HtmlTextInput captchaInput;
-                HtmlSubmitInput enterSubmitButton;
+                //HtmlTextInput cpfInput;
+                //HtmlPasswordInput passwordInput;
+                //HtmlTextInput captchaInput;
+                //HtmlSubmitInput enterSubmitButton;
                 HtmlForm captcha1Form2;
                 while (flag && failCount < capFail) {
-                    captcha = getCaptcha(page);
+                    captcha = getCaptcha(pageResult);
                     if (captcha != null) {
-                        cpfInput = (HtmlTextInput) page.getElementById("ctl00_cphContent_txtEmail");
-                        cpfInput.setText(cpf);
-                        passwordInput = (HtmlPasswordInput) page.getElementById("ctl00_cphContent_txtSenha");
-                        passwordInput.setText(password);
-                        captchaInput = page.getFirstByXPath("//input[@name='ctl00$cphContent$CaptchaControl1']");
-                        enterSubmitButton = (HtmlSubmitInput) page.getElementById("ctl00_cphContent_btEntrar");
-                        captchaInput.setText(captcha);
-                        captcha1Form2 = enterSubmitButton.getEnclosingForm();
-                        pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
-                        results = getDocuments(pageResult);
+                        /*Nuevo*/
+                        captcha1Input = pageResult.getFirstByXPath("//input[@name='ctl00$cphContent$frmPreVisualiza$CaptchaControl1']");
+                        captcha1Input.setText(captcha);
+                        captcha1SubmitInput = (HtmlSubmitInput) pageResult.getElementById("ctl00_cphContent_frmPreVisualiza_btEntrar");
+                        captcha1Form = captcha1SubmitInput.getEnclosingForm();
 
-                        if (Objects.isNull(results) || !results.isEmpty()) {
+                        page = webClient.getPage(captcha1Form.getWebRequest(captcha1SubmitInput));
+                        HtmlTable documentsTable = (HtmlTable) page.getElementById(
+                                "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
+                        if (Objects.isNull(documentsTable)) {
+                            logger.info("Error with the detected text from captcha second page");
+
+                            failCount++;
+                            Thread.sleep(3000L + r.nextInt(2000));
+                        }
+                        else{
+                            results = getDocuments(page);
+                            flag = false;
+                        }
+                        /*Fin nuevo*/
+
+                        //cpfInput = (HtmlTextInput) page.getElementById("ctl00_cphContent_txtEmail");
+                        //cpfInput.setText(cpf);
+                        //passwordInput = (HtmlPasswordInput) page.getElementById("ctl00_cphContent_txtSenha");
+                        //passwordInput.setText(password);
+                        //captchaInput = page.getFirstByXPath("//input[@name='ctl00$cphContent$CaptchaControl1']");
+                        //enterSubmitButton = (HtmlSubmitInput) page.getElementById("ctl00_cphContent_btEntrar");
+                        //captchaInput.setText(captcha);
+                        //captcha1Form2 = enterSubmitButton.getEnclosingForm();
+                        //pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
+                        //results = getDocuments(pageResult);
+
+                        /*if (Objects.isNull(results) || !results.isEmpty()) {
                             flag = false;
                         } else {
-                            //captchaSolver.report(captcha.getId());
                             logger.info("Other error for the captcha");
                             page = (HtmlPage) pageResult;
                             failCount++;
                             Thread.sleep(3000L + r.nextInt(2000));
-                        }
+                        }*/
                     } else {
-                        results = getDocuments(page);
+                        results = getDocuments(pageResult);
                         flag = false;
                     }
                 }
@@ -186,7 +203,11 @@ public abstract class SPJucespTemplate {
         return documentLink.click();
     }
 
-    protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException {
+    protected HtmlPage getPageFromNire(String nire) throws IOException {
+        return webClient.getPage("https://jucesponline.sp.gov.br/Pre_Visualiza.aspx?nire=" + nire);
+    }
+
+    protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException, InterruptedException {
         ArrayList<DocumentMetadata> results = new ArrayList<DocumentMetadata>();
         if (pageResult instanceof UnexpectedPage unexpected)
             results.add(DocumentMetadata

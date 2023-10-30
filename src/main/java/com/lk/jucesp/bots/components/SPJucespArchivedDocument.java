@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Math.min;
 
@@ -40,11 +41,12 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
 
     @Override
     protected String getUrlHomePage() {
-        return "https://www.jucesponline.sp.gov.br/Pesquisa.aspx?IDProduto=12";
+        return "https://www.jucesponline.sp.gov.br";
     }
+    //"https://www.jucesponline.sp.gov.br/Pesquisa.aspx?IDProduto=12"
 
     @Override
-    protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException {
+    protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException, InterruptedException {
         List<DocumentMetadata> results = new ArrayList<>();
 
         if (pageResult instanceof HtmlPage htmlPage
@@ -52,7 +54,7 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
 
             boolean flag = true;
             while (flag) {
-                fillAllDocs(htmlPage, results);
+                fillAllDocs(selectDocumentType(htmlPage), results);
                 HtmlAnchor next = (HtmlAnchor) htmlPage.getElementById(
                         "ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText");
                 if (next != null) {
@@ -109,5 +111,39 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
             }
         }
     }
+
+    private HtmlPage selectDocumentType(HtmlPage htmlPage) throws IOException, InterruptedException {
+        var r = new Random();
+        Thread.sleep(3000L + r.nextInt(2000));
+        HtmlTable documentsTable = (HtmlTable) htmlPage.getElementById(
+                "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
+        HtmlSubmitInput okSubmitButton = (HtmlSubmitInput) htmlPage.getElementById(
+                "ctl00_cphContent_frmPreVisualiza_btnEmitir");
+        HtmlForm submitForm = okSubmitButton.getEnclosingForm();
+        Iterator iteratorTable = documentsTable.getChildElements().iterator();
+        HtmlTableBody tableBody = (HtmlTableBody) iteratorTable.next();
+        Iterator rowIterator = tableBody.getChildElements().iterator();
+        rowIterator.next();
+        while (rowIterator.hasNext()) {
+            HtmlTableRow row = (HtmlTableRow) rowIterator.next();
+            HtmlTableCell radioCell = row.getCell(0);
+            Iterator<DomElement> radioCellIterator = radioCell.getChildElements().iterator();
+            DomElement element = radioCellIterator.next();
+            if(element instanceof HtmlRadioButtonInput radioButtonInput && radioButtonInput.getAttribute("id").equals("ctl00_cphContent_frmPreVisualiza_rblTipoDocumento_3")){
+                radioButtonInput.setChecked(true);
+                HtmlPage documentPage = webClient.getPage(submitForm.getWebRequest(okSubmitButton));
+                return documentPage;
+            }
+        }
+        //typeDocument.setAttribute("checked","checked");
+        //HtmlForm submitForm = typeDocument.getEnclosingForm();
+        //HtmlPage page = webClient.getPage(submitForm.getWebRequest(typeDocument));
+        return htmlPage;
+    }
+
+   /* private HtmlPage getNire(HtmlPage htmlPage){
+        HtmlTable documentsTable = (HtmlTable) htmlPage.getElementById(
+                "ctl00_cphContent_GdvArquivamento_gdvContent");
+    }*/
 
 }
