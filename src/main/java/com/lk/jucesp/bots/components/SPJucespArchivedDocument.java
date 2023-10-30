@@ -135,15 +135,6 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 return documentPage;
             }
         }
-        //typeDocument.setAttribute("checked","checked");
-        //HtmlForm submitForm = typeDocument.getEnclosingForm();
-        //HtmlPage page = webClient.getPage(submitForm.getWebRequest(typeDocument));
         return htmlPage;
     }
-
-   /* private HtmlPage getNire(HtmlPage htmlPage){
-        HtmlTable documentsTable = (HtmlTable) htmlPage.getElementById(
-                "ctl00_cphContent_GdvArquivamento_gdvContent");
-    }*/
-
 }

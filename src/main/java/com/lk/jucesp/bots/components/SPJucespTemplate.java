@@ -145,8 +145,8 @@ public abstract class SPJucespTemplate {
                         captcha1SubmitInput = (HtmlSubmitInput) pageResult.getElementById("ctl00_cphContent_frmPreVisualiza_btEntrar");
                         captcha1Form = captcha1SubmitInput.getEnclosingForm();
 
-                        page = webClient.getPage(captcha1Form.getWebRequest(captcha1SubmitInput));
-                        HtmlTable documentsTable = (HtmlTable) page.getElementById(
+                        pageResult = webClient.getPage(captcha1Form.getWebRequest(captcha1SubmitInput));
+                        HtmlTable documentsTable = (HtmlTable) pageResult.getElementById(
                                 "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
                         if (Objects.isNull(documentsTable)) {
                             logger.info("Error with the detected text from captcha second page");
@@ -155,7 +155,7 @@ public abstract class SPJucespTemplate {
                             Thread.sleep(3000L + r.nextInt(2000));
                         }
                         else{
-                            results = getDocuments(page);
+                            results = getDocuments(pageResult);
                             flag = false;
                         }
                         /*Fin nuevo*/
