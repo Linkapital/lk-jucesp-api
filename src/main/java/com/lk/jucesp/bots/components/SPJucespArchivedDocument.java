@@ -2,32 +2,21 @@ package com.lk.jucesp.bots.components;
 
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.UnexpectedPage;
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
-import com.gargoylesoftware.htmlunit.html.HtmlSpan;
-import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
-import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
+import com.gargoylesoftware.htmlunit.html.*;
 import com.lk.captcha.CaptchaSolver;
 import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.net.URL;
+import java.util.*;
 
 import static java.lang.Math.min;
+import static java.lang.String.format;
 
 public class SPJucespArchivedDocument extends SPJucespTemplate {
 
     private static SPJucespTemplate instance;
+    private static final int capFail = 100;
 
     private SPJucespArchivedDocument() {
     }
@@ -54,7 +43,9 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
 
             boolean flag = true;
             while (flag) {
-                fillAllDocs(selectDocumentType(htmlPage), results);
+                HtmlPage documentType = selectDocumentType(htmlPage);
+                HtmlPage loginPage = doLogin(documentType);
+                fillAllDocs(loginPage, results);
                 HtmlAnchor next = (HtmlAnchor) htmlPage.getElementById(
                         "ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText");
                 if (next != null) {
@@ -129,13 +120,55 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
             HtmlTableCell radioCell = row.getCell(0);
             Iterator<DomElement> radioCellIterator = radioCell.getChildElements().iterator();
             DomElement element = radioCellIterator.next();
-            if(element instanceof HtmlRadioButtonInput radioButtonInput && radioButtonInput.getAttribute("id").equals("ctl00_cphContent_frmPreVisualiza_rblTipoDocumento_3")){
+            if(element instanceof HtmlRadioButtonInput radioButtonInput &&
+                    radioButtonInput.getAttribute("id")
+                            .equals("ctl00_cphContent_frmPreVisualiza_rblTipoDocumento_3")){
                 radioButtonInput.setChecked(true);
                 HtmlPage tempPage = okSubmitButton.click();
-                ///HtmlPage documentPage = webClient.getPage(submitForm.getWebRequest(okSubmitButton));
                 return tempPage;
             }
         }
         return htmlPage;
+    }
+
+    private HtmlPage doLogin(HtmlPage htmlPage) throws IOException, InterruptedException {
+        SPJucespCredentials credentials = SPJucespCredentialsGenerator.getInstance().getCredentials();
+        String cpf = credentials.getCpf();
+        String password = credentials.getPassword();
+        logger.info(format("%s Credenciales de jucesp usadas ---- %s", cpf, password));
+        boolean flag = true;
+        var r = new Random();
+        String captcha;
+        var failCount = 0;
+        HtmlTextInput cpfInput;
+        HtmlPasswordInput passwordInput;
+        HtmlTextInput captchaInput;
+        HtmlSubmitInput enterSubmitButton;
+        HtmlForm captcha1Form2;
+        HtmlPage pageResult = htmlPage;
+        while (flag && failCount < capFail) {
+            captcha = getCaptcha(pageResult);
+            if (captcha != null) {
+                cpfInput = (HtmlTextInput) pageResult.getElementById("ctl00_cphContent_txtEmail");
+                cpfInput.setText(cpf);
+                passwordInput = (HtmlPasswordInput) pageResult.getElementById("ctl00_cphContent_txtSenha");
+                passwordInput.setText(password);
+                captchaInput = pageResult.getFirstByXPath("//input[@name='ctl00$cphContent$CaptchaControl1']");
+                enterSubmitButton = (HtmlSubmitInput) pageResult.getElementById("ctl00_cphContent_btEntrar");
+                captchaInput.setText(captcha);
+                captcha1Form2 = enterSubmitButton.getEnclosingForm();
+                pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
+                HtmlAnchor next = (HtmlAnchor) pageResult.getElementById(
+                        "ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText");
+                if (Objects.isNull(next) || next != null) {
+                    flag = false;
+                } else {
+                    logger.info("Other error for the captcha in the login page: "+(failCount + 1));
+                    failCount++;
+                    Thread.sleep(3000L + r.nextInt(2000));
+              }
+            }
+        }
+        return pageResult;
     }
 }

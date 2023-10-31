@@ -62,10 +62,6 @@ public abstract class SPJucespTemplate {
         var failCount = 0;
 
         try {
-            SPJucespCredentials credentials = SPJucespCredentialsGenerator.getInstance().getCredentials();
-            String cpf = credentials.getCpf();
-            String password = credentials.getPassword();
-            logger.info(format("%s Credenciales de jucesp usadas ---- %s", cpf, password));
 
             HtmlTable resultTable = null;
             var r = new Random();
@@ -101,7 +97,7 @@ public abstract class SPJucespTemplate {
 
                     if (Objects.isNull(resultTable))
                         //captchaSolver.report(captcha.getId());
-                        logger.info("Error with the detected text from captcha");
+                        logger.info("Error with the detected text from captcha: " + (failCount + 1));
 
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
@@ -123,19 +119,11 @@ public abstract class SPJucespTemplate {
             Iterator cellIterator = tableCell.getChildElements().iterator();
             HtmlAnchor documentLink = (HtmlAnchor) cellIterator.next();
             String nire = documentLink.getVisibleText();
-            //Page linkPage = getDocumentPage(documentLink);
-            //page = (HtmlPage) linkPage;
-
             if (nire =="") {
                 throw new CannotGetJucespFileException("No NIRE found for this social reason");
             } else {
                 HtmlPage pageResult = getPageFromNire(nire);
                 flag = true;
-                //HtmlTextInput cpfInput;
-                //HtmlPasswordInput passwordInput;
-                //HtmlTextInput captchaInput;
-                //HtmlSubmitInput enterSubmitButton;
-                HtmlForm captcha1Form2;
                 while (flag && failCount < capFail) {
                     captcha = getCaptcha(pageResult);
                     if (captcha != null) {
@@ -149,7 +137,7 @@ public abstract class SPJucespTemplate {
                         HtmlTable documentsTable = (HtmlTable) pageResult.getElementById(
                                 "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
                         if (Objects.isNull(documentsTable)) {
-                            logger.info("Error with the detected text from captcha second page");
+                            logger.info("Error with the detected text from captcha second page: "+ (failCount + 1));
 
                             failCount++;
                             Thread.sleep(3000L + r.nextInt(2000));
@@ -159,26 +147,6 @@ public abstract class SPJucespTemplate {
                             flag = false;
                         }
                         /*Fin nuevo*/
-
-                        //cpfInput = (HtmlTextInput) page.getElementById("ctl00_cphContent_txtEmail");
-                        //cpfInput.setText(cpf);
-                        //passwordInput = (HtmlPasswordInput) page.getElementById("ctl00_cphContent_txtSenha");
-                        //passwordInput.setText(password);
-                        //captchaInput = page.getFirstByXPath("//input[@name='ctl00$cphContent$CaptchaControl1']");
-                        //enterSubmitButton = (HtmlSubmitInput) page.getElementById("ctl00_cphContent_btEntrar");
-                        //captchaInput.setText(captcha);
-                        //captcha1Form2 = enterSubmitButton.getEnclosingForm();
-                        //pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
-                        //results = getDocuments(pageResult);
-
-                        /*if (Objects.isNull(results) || !results.isEmpty()) {
-                            flag = false;
-                        } else {
-                            logger.info("Other error for the captcha");
-                            page = (HtmlPage) pageResult;
-                            failCount++;
-                            Thread.sleep(3000L + r.nextInt(2000));
-                        }*/
                     } else {
                         results = getDocuments(pageResult);
                         flag = false;
@@ -218,7 +186,7 @@ public abstract class SPJucespTemplate {
         return results;
     }
 
-    private String getCaptcha(HtmlPage page) throws IOException{
+    protected String getCaptcha(HtmlPage page) throws IOException{
         HtmlImage image = page.getFirstByXPath("//img[contains(@src,'Captcha')]");
         if (image == null)
             return null;
