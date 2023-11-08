@@ -4,41 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="710002b4-be64-433b-85ba-2b0d1e89ab66" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/jucesp-bot.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/jucesp-bot.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/MainApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/MainApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespArchivedDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespArchivedDocument.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespBuilderImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespBuilderImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespRegistration.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespRegistration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/DetectText.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/DetectText.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/ImageTools.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/ImageTools.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/jucesp-bot-0.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/jucesp-bot-0.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespArchivedDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespArchivedDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespBuilderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespBuilderImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/EnableJucesp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/EnableJucesp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/JucespConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/JucespConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/DetectText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/DetectText.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/ImageTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/ImageTools.java" afterDir="false" />
-    </list>
+    <list default="true" id="710002b4-be64-433b-85ba-2b0d1e89ab66" name="Changes" comment="refactors" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +41,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "contexts": [
+    {
+      "name": "minikube",
+      "originalNamespace": "default"
+    }
+  ],
+  "isMigrated": true
+}]]></component>
   <component name="KubernetesSettings">
     <option name="contextName" value="minikube" />
   </component>
@@ -94,6 +69,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/odelr/Documents/Proyects/linkapital-jucesp-bot",
@@ -226,12 +202,25 @@
       <workItem from="1665865253798" duration="599000" />
       <workItem from="1666027914185" duration="239000" />
       <workItem from="1666731848639" duration="8000" />
-      <workItem from="1699463805084" duration="2246000" />
+      <workItem from="1699463805084" duration="2316000" />
     </task>
+    <task id="LOCAL-00001" summary="refactors">
+      <option name="closed" value="true" />
+      <created>1699466090422</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699466090422</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactors" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
