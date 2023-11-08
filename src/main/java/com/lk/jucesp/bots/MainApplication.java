@@ -12,8 +12,10 @@ public class MainApplication {
 
     public static void main(String[] args) throws CannotGetJucespFileException {
         LOGGER.info("Running");
-        String socialReason = args[0];
-        SPJucespBot spJucespBot = new SPJucespBot(new SPJucespBuilderImpl());
-        spJucespBot.getArchivedDocuments(socialReason);
+        if (args.length > 0) {
+            String socialReason = args[0];
+            SPJucespBot spJucespBot = new SPJucespBot(new SPJucespBuilderImpl());
+            spJucespBot.getArchivedDocuments(socialReason);
+        }
     }
 }
