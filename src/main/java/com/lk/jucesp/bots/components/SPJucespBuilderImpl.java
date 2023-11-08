@@ -1,30 +1,28 @@
 package com.lk.jucesp.bots.components;
 
 import com.lk.captcha.CaptchaSolver;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class SPJucespBuilderImpl implements SPJucespBuilder {
 
-    private final CaptchaSolver captchaSolver;
 
-    public SPJucespBuilderImpl(CaptchaSolver captchaSolver) {
-        this.captchaSolver = captchaSolver;
-    }
 
     @Override
     public SPJucespTemplate createJucespRegistration() {
-        return SPJucespRegistration.getInstance(captchaSolver);
+        return SPJucespRegistration.getInstance();
     }
 
     @Override
     public SPJucespTemplate createJucespSimplifiedCertification() {
-        return SPJucespSimplifiedCertification.getInstance(captchaSolver);
+        return SPJucespSimplifiedCertification.getInstance();
     }
 
     @Override
     public SPJucespTemplate createJucespArchivedDocument() {
-        return SPJucespArchivedDocument.getInstance(captchaSolver);
+        return SPJucespArchivedDocument.getInstance();
     }
 
 }

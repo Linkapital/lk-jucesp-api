@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.lk'
 version = '0.0.1'
-sourceCompatibility = '17'
+sourceCompatibility = "17"
 
 configurations {
     compileOnly {
@@ -25,6 +25,9 @@ dependencies {
     implementation files('libs/captcha-0.0.1.jar')
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    implementation 'software.amazon.awssdk:rekognition:2.20.109'
+    implementation 'org.slf4j:slf4j-api:1.7.5'
+    implementation 'org.slf4j:slf4j-simple:1.7.5'
 }
 
 jar {
