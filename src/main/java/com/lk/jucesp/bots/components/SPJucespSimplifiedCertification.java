@@ -2,7 +2,6 @@ package com.lk.jucesp.bots.components;
 
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.lk.captcha.CaptchaSolver;
 
 import java.io.IOException;
 

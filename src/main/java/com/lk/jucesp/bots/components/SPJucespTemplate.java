@@ -13,7 +13,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
@@ -36,12 +35,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.lang.String.format;
-
 
 public abstract class SPJucespTemplate {
 
@@ -50,7 +47,7 @@ public abstract class SPJucespTemplate {
     private static final int capFail = 100;
     protected final WebClient webClient;
     private final ImageTools imageTools;
-    private String localFile = "captcha.jpg";
+    private final String localFile = "captcha.jpg";
 
     protected SPJucespTemplate() {
         this.webClient = new WebClient();
@@ -101,7 +98,7 @@ public abstract class SPJucespTemplate {
 
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
-                }else {
+                } else {
                     flag = false;
                     resultTable = (HtmlTable) page.getElementById("ctl00_cphContent_gdvResultadoBusca_gdvContent");
                 }
@@ -119,7 +116,7 @@ public abstract class SPJucespTemplate {
             Iterator cellIterator = tableCell.getChildElements().iterator();
             HtmlAnchor documentLink = (HtmlAnchor) cellIterator.next();
             String nire = documentLink.getVisibleText();
-            if (nire =="") {
+            if (nire == "") {
                 throw new CannotGetJucespFileException("No NIRE found for this social reason");
             } else {
                 HtmlPage pageResult = getPageFromNire(nire);
@@ -137,12 +134,11 @@ public abstract class SPJucespTemplate {
                         HtmlTable documentsTable = (HtmlTable) pageResult.getElementById(
                                 "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
                         if (Objects.isNull(documentsTable)) {
-                            logger.info("Error with the detected text from captcha second page: "+ (failCount + 1));
+                            logger.info("Error with the detected text from captcha second page: " + (failCount + 1));
 
                             failCount++;
                             Thread.sleep(3000L + r.nextInt(2000));
-                        }
-                        else{
+                        } else {
                             results = getDocuments(pageResult);
                             flag = false;
                         }
@@ -158,7 +154,7 @@ public abstract class SPJucespTemplate {
                 checkCapFail(failCount, socialReason);
             }
         } catch (Exception e) {
-            logger.info(format("%s -- error social reason: %s", e.getMessage(), socialReason));
+            logger.info(String.format("%s -- error social reason: %s", e.getMessage(), socialReason));
             throw new CannotGetJucespFileException(e.getMessage());
         }
 
@@ -186,34 +182,38 @@ public abstract class SPJucespTemplate {
         return results;
     }
 
-    protected String getCaptcha(HtmlPage page) throws IOException{
+    protected String getCaptcha(HtmlPage page) throws IOException {
         HtmlImage image = page.getFirstByXPath("//img[contains(@src,'Captcha')]");
         if (image == null)
             return null;
 
-        URL url = new URL(format("%s%s", jucespUrl, image.getSrcAttribute()));
+        URL url = new URL(String.format("%s%s", jucespUrl, image.getSrcAttribute()));
+
         return getDetectedText(url);
     }
 
-    private String getDetectedText(URL url) throws IOException {
+    private String getDetectedText(URL url) {
         imageTools.saveImage(url);
         imageTools.resizeAndSave(localFile);
-        DetectText detectTextTool = new DetectText();
         Region region = Region.US_EAST_1;
         RekognitionClient rekClient = RekognitionClient.builder()
                 .region(region)
                 .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
-        String detectedText  = detectTextTool.detectTextLabels(rekClient, localFile ).replaceAll("\\s+","");
-        logger.info("Word: "+detectedText);
+
+        String text = Optional.ofNullable(DetectText.detectTextLabels(rekClient, localFile))
+                .map(s -> s.replaceAll("\\s+", ""))
+                .orElse("");
+
+        logger.info(String.format("Word: %s", text));
         rekClient.close();
-        return detectedText;
+
+        return text;
     }
 
     private void checkCapFail(int failCount, String socialReason) throws CannotGetJucespFileException {
         if (failCount >= capFail) {
-            String message = format("Cannot decode captcha -- social reason: %s", socialReason);
-//            logger.error(message);
+            String message = String.format("Cannot decode captcha -- social reason: %s", socialReason);
             throw new CannotGetJucespFileException(message);
         }
     }

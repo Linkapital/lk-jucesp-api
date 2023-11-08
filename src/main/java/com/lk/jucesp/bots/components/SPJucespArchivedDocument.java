@@ -2,21 +2,32 @@ package com.lk.jucesp.bots.components;
 
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.UnexpectedPage;
-import com.gargoylesoftware.htmlunit.html.*;
-import com.lk.captcha.CaptchaSolver;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
+import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTable;
+import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
+import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
+import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.*;
-
-import static java.lang.Math.min;
-import static java.lang.String.format;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class SPJucespArchivedDocument extends SPJucespTemplate {
 
-    private static SPJucespTemplate instance;
     private static final int capFail = 100;
+    private static SPJucespTemplate instance;
 
     private SPJucespArchivedDocument() {
     }
@@ -38,22 +49,21 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
     protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException, InterruptedException {
         List<DocumentMetadata> results = new ArrayList<>();
 
-        if (pageResult instanceof HtmlPage htmlPage
-            && htmlPage.getElementById("ctl00_cphContent_txtEmail") == null) {
-
+        if (pageResult instanceof HtmlPage htmlPage && htmlPage.getElementById("ctl00_cphContent_txtEmail") == null) {
             boolean flag = true;
+            HtmlPage documentType;
+            HtmlPage loginPage;
+            HtmlHiddenInput hiddenInput;
+            HtmlForm submitForm;
             while (flag) {
-                HtmlPage documentType = selectDocumentType(htmlPage);
-                HtmlPage loginPage = doLogin(documentType);
+                documentType = selectDocumentType(htmlPage);
+                loginPage = doLogin(documentType);
                 fillAllDocs(loginPage, results);
-                HtmlAnchor next = (HtmlAnchor) htmlPage.getElementById(
-                        "ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText");
-                if (next != null) {
-                    HtmlHiddenInput hiddenInput = (HtmlHiddenInput) htmlPage.getElementById(
-                            "__EVENTTARGET");
-                    HtmlForm submitForm = hiddenInput.getEnclosingForm();
-                    hiddenInput.setAttribute("value",
-                            "ctl00$cphContent$GdvArquivamento$pgrGridView$btrNext$lbtText");
+
+                if (!ObjectUtils.isEmpty(htmlPage.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText"))) {
+                    hiddenInput = (HtmlHiddenInput) htmlPage.getElementById("__EVENTTARGET");
+                    submitForm = hiddenInput.getEnclosingForm();
+                    hiddenInput.setAttribute("value", "ctl00$cphContent$GdvArquivamento$pgrGridView$btrNext$lbtText");
                     htmlPage = webClient.getPage(submitForm.getWebRequest(hiddenInput));
                 } else {
                     flag = false;
@@ -78,33 +88,41 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
         Iterator rowIterator = tableBody.getChildElements().iterator();
         rowIterator.next();
 
+        HtmlTableRow row;
+        HtmlTableCell radioCell;
+        HtmlTableCell dateCell;
+        HtmlTableCell documentCell;
+        Iterator<DomElement> radioCellIterator;
+        DomElement element;
+        Iterator<DomElement> documentCellIterator;
+        HtmlSpan descriptionSpan;
+        UnexpectedPage documentPage;
         while (rowIterator.hasNext()) {
-            HtmlTableRow row = (HtmlTableRow) rowIterator.next();
-            HtmlTableCell radioCell = row.getCell(0);
-            HtmlTableCell dateCell = row.getCell(1);
-            HtmlTableCell documentCell = row.getCell(4);
-            Iterator<DomElement> radioCellIterator = radioCell.getChildElements().iterator();
-            DomElement element = radioCellIterator.next();
-            Iterator<DomElement> documentCellIterator = documentCell.getChildElements().iterator();
-            HtmlSpan descriptionSpan = (HtmlSpan) documentCellIterator.next();
+            row = (HtmlTableRow) rowIterator.next();
+            radioCell = row.getCell(0);
+            dateCell = row.getCell(1);
+            documentCell = row.getCell(4);
+            radioCellIterator = radioCell.getChildElements().iterator();
+            element = radioCellIterator.next();
+            documentCellIterator = documentCell.getChildElements().iterator();
+            descriptionSpan = (HtmlSpan) documentCellIterator.next();
 
             if (element instanceof HtmlRadioButtonInput radioButtonInput) {
                 radioButtonInput.setChecked(true);
-                UnexpectedPage documentPage = webClient.getPage(submitForm.getWebRequest(continueSubmitButton));
-                String description = descriptionSpan.getTextContent();
+                documentPage = webClient.getPage(submitForm.getWebRequest(continueSubmitButton));
                 results.add(DocumentMetadata.builder()
                         .data(documentPage.getInputStream())
                         .date(dateCell.getTextContent())
-                        .description(ObjectUtils.isEmpty(description)
+                        .description(ObjectUtils.isEmpty(descriptionSpan.getTextContent())
                                      ? null
-                                     : description.substring(0, min(50, description.length())))
+                                     : descriptionSpan.getTextContent().substring(0, Math.min(50, descriptionSpan.getTextContent().length())))
                         .build());
             }
         }
     }
 
     private HtmlPage selectDocumentType(HtmlPage htmlPage) throws IOException, InterruptedException {
-        var r = new Random();
+        Random r = new Random();
         Thread.sleep(3000L + r.nextInt(2000));
         HtmlTable documentsTable = (HtmlTable) htmlPage.getElementById(
                 "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
@@ -115,19 +133,26 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
         HtmlTableBody tableBody = (HtmlTableBody) iteratorTable.next();
         Iterator rowIterator = tableBody.getChildElements().iterator();
         rowIterator.next();
+        HtmlTableRow row;
+        HtmlTableCell radioCell;
+        Iterator<DomElement> radioCellIterator;
+        DomElement element;
+        HtmlPage tempPage;
         while (rowIterator.hasNext()) {
-            HtmlTableRow row = (HtmlTableRow) rowIterator.next();
-            HtmlTableCell radioCell = row.getCell(0);
-            Iterator<DomElement> radioCellIterator = radioCell.getChildElements().iterator();
-            DomElement element = radioCellIterator.next();
-            if(element instanceof HtmlRadioButtonInput radioButtonInput &&
-                    radioButtonInput.getAttribute("id")
-                            .equals("ctl00_cphContent_frmPreVisualiza_rblTipoDocumento_3")){
+            row = (HtmlTableRow) rowIterator.next();
+            radioCell = row.getCell(0);
+            radioCellIterator = radioCell.getChildElements().iterator();
+            element = radioCellIterator.next();
+
+            if (element instanceof HtmlRadioButtonInput radioButtonInput &&
+                "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento_3".equals(radioButtonInput.getAttribute("id"))) {
                 radioButtonInput.setChecked(true);
-                HtmlPage tempPage = okSubmitButton.click();
+                tempPage = okSubmitButton.click();
+
                 return tempPage;
             }
         }
+
         return htmlPage;
     }
 
@@ -135,11 +160,11 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
         SPJucespCredentials credentials = SPJucespCredentialsGenerator.getInstance().getCredentials();
         String cpf = credentials.getCpf();
         String password = credentials.getPassword();
-        logger.info(format("%s Credenciales de jucesp usadas ---- %s", cpf, password));
+        logger.info(String.format("%s Credenciales de jucesp usadas ---- %s", cpf, password));
         boolean flag = true;
-        var r = new Random();
+        Random r = new Random();
         String captcha;
-        var failCount = 0;
+        int failCount = 0;
         HtmlTextInput cpfInput;
         HtmlPasswordInput passwordInput;
         HtmlTextInput captchaInput;
@@ -158,17 +183,17 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 captchaInput.setText(captcha);
                 captcha1Form2 = enterSubmitButton.getEnclosingForm();
                 pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
-                HtmlAnchor next = (HtmlAnchor) pageResult.getElementById(
-                        "ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText");
-                if (Objects.isNull(next) || next != null) {
+
+                if (ObjectUtils.isEmpty(pageResult.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText"))) {
                     flag = false;
                 } else {
-                    logger.info("Other error for the captcha in the login page: "+(failCount + 1));
+                    logger.info(String.format("Other error for the captcha in the login page: %s", (failCount + 1)));
                     failCount++;
                     Thread.sleep(3000L + r.nextInt(2000));
-              }
+                }
             }
         }
+
         return pageResult;
     }
 }

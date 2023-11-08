@@ -2,7 +2,6 @@ package com.lk.jucesp.bots.components;
 
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.lk.captcha.CaptchaSolver;
 import lombok.NonNull;
 
 import java.io.IOException;
@@ -12,7 +11,6 @@ public class SPJucespRegistration extends SPJucespTemplate {
     protected static SPJucespTemplate INSTANCE;
 
     private SPJucespRegistration() {
-
     }
 
     static SPJucespTemplate getInstance() {

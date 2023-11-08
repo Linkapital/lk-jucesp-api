@@ -1,3 +1,45 @@
 
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+t
+Dsrc/main/java/com/lk/jucesp/bots/components/SPJucespBuilderImpl.java,9\2\9235c7710d51fa8d79f9a7251c097b5c14323dd7
+q
+Asrc/main/java/com/lk/jucesp/bots/components/SPJucespTemplate.java,e\b\eb06c84e2a8497b2bfd31926b47e3b28e5194ec3
+l
+<src/main/java/com/lk/jucesp/bots/components/SPJucespBot.java,f\e\fe69d885b806690d018710f90d2d691bf938d3e7
+e
+5src/main/java/com/lk/jucesp/bots/MainApplication.java,6\0\6091c6d67928ca0d2452db96b16d1e1565b16b6c
+y
+Isrc/main/java/com/lk/jucesp/bots/components/SPJucespArchivedDocument.java,e\6\e6403f40d1bd1351349ee4649f2ea9e968a40a41
+q
+Asrc/main/java/com/lk/jucesp/bots/components/DocumentMetadata.java,b\0\b0a298b8263e4085edf46759d86c42ce6f5c8325
+j
+:src/main/java/com/lk/jucesp/bots/components/JucespBot.java,b\5\b5732a8b6ea648ae2da9212daec52b37b5bf5ae8
+p
+@src/main/java/com/lk/jucesp/bots/components/SPJucespBuilder.java,4\7\47aa639be098bf41596fa7dfd78800d612a5615f
+t
+Dsrc/main/java/com/lk/jucesp/bots/components/SPJucespCredentials.java,e\0\e00ab031f138564b124cd797caadb6f8603381d4
+}
+Msrc/main/java/com/lk/jucesp/bots/components/SPJucespCredentialsGenerator.java,9\f\9f807051c4d04b5e5de216b83846f9372dc2f4b0
+u
+Esrc/main/java/com/lk/jucesp/bots/components/SPJucespRegistration.java,3\5\35c5357e8576355f80edde060c794b2dfb86e92b
+€
+Psrc/main/java/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.java,e\4\e49763ec09111d3b2530f1d7048daf287bccef6d
+q
+Asrc/main/java/com/lk/jucesp/bots/configurations/EnableJucesp.java,2\5\25bd762ce2e5c1ae0b3e242f6e2997f72f1c71d1
+q
+Asrc/main/java/com/lk/jucesp/bots/configurations/JucespConfig.java,a\f\afdad82451624a0eeed6c691bbfa4439369a7b10
+}
+Msrc/main/java/com/lk/jucesp/bots/exceptions/CannotGetJucespFileException.java,f\0\f00d8878cbfeb997ac8635751da9be0d0e0b5fe5
+e
+5src/main/java/com/lk/jucesp/bots/util/DetectText.java,7\5\75abed7befad67397b4c73d4c96f529fcad2bcfa
+e
+5src/main/java/com/lk/jucesp/bots/util/ImageTools.java,c\e\ce3a5effb85e4425dbcd069a2010493c69dee0ad
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+Q
+!.idea/modules/jucesp-bot.main.iml,c\d\cd60fafef4a470dbcc22a2bc3dd05793fc208843

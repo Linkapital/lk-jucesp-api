@@ -1,6 +1,5 @@
 package com.lk.jucesp.bots.configurations;
 
-import com.lk.captcha.CaptchaSolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

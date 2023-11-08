@@ -9,4 +9,5 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(value = "com.lk.jucesp.bots.components")
 @Configuration
 public class JucespConfig {
+
 }

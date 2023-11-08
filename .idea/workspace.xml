@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="710002b4-be64-433b-85ba-2b0d1e89ab66" name="Changes" comment="" />
+    <list default="true" id="710002b4-be64-433b-85ba-2b0d1e89ab66" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/jucesp-bot.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/jucesp-bot.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/MainApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/MainApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespArchivedDocument.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespArchivedDocument.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespBuilderImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespBuilderImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespRegistration.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespRegistration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/components/SPJucespTemplate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/DetectText.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/DetectText.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/ImageTools.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lk/jucesp/bots/util/ImageTools.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/jucesp-bot-0.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/jucesp-bot-0.0.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespArchivedDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespArchivedDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespBuilderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespBuilderImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespSimplifiedCertification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/components/SPJucespTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/EnableJucesp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/EnableJucesp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/JucespConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/configurations/JucespConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/DetectText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/DetectText.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/ImageTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lk/jucesp/bots/util/ImageTools.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,13 +75,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesSettings">
+    <option name="contextName" value="minikube" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2G5geXVPJIHSDl4V2te0HH9XKrM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -57,7 +95,6 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "android.gradle.sync.needed": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/odelr/Documents/Proyects/linkapital-jucesp-bot",
     "node.js.detected.package.eslint": "true",
@@ -68,7 +105,8 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "spring.configuration.checksum": "a8c96ec9f317c020fde618b02431c48f"
+    "spring.configuration.checksum": "a8c96ec9f317c020fde618b02431c48f",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -79,7 +117,7 @@
       <recent name="com.linkapital.jucesp.bots" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.Unnamed">
+  <component name="RunManager" selected="Gradle.linkapital-jucesp-bot [jar]">
     <configuration name="linkapital-jucesp-bot [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -157,19 +195,6 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="jucesp-bot" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="jucesp-bot" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Gradle.linkapital-jucesp-bot [jar]" />
       <item itemvalue="Gradle.linkapital-jucesp-bot [build]" />
@@ -201,6 +226,7 @@
       <workItem from="1665865253798" duration="599000" />
       <workItem from="1666027914185" duration="239000" />
       <workItem from="1666731848639" duration="8000" />
+      <workItem from="1699463805084" duration="2246000" />
     </task>
     <servers />
   </component>
