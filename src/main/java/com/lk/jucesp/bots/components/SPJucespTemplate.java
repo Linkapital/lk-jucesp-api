@@ -24,6 +24,7 @@ import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
 import com.lk.jucesp.bots.util.DetectText;
 import com.lk.jucesp.bots.util.ImageTools;
+import org.springframework.util.ObjectUtils;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
@@ -56,12 +57,11 @@ public abstract class SPJucespTemplate {
 
     public List<DocumentMetadata> getDocuments(String socialReason) throws CannotGetJucespFileException {
         List<DocumentMetadata> results = new ArrayList<>();
-        var failCount = 0;
+        int failCount = 0;
 
         try {
-
             HtmlTable resultTable = null;
-            var r = new Random();
+            Random r = new Random();
             webClient.getOptions().setThrowExceptionOnScriptError(false);
             webClient.addRequestHeader("Sec-Fetch-Dest", "document");
             webClient.addRequestHeader("Sec-Fetch-Mode", "cors");
@@ -92,7 +92,7 @@ public abstract class SPJucespTemplate {
                     page = webClient.getPage(captcha1Form.getWebRequest(captcha1SubmitInput));
                     resultTable = (HtmlTable) page.getElementById("ctl00_cphContent_gdvResultadoBusca_gdvContent");
 
-                    if (Objects.isNull(resultTable))
+                    if (ObjectUtils.isEmpty(resultTable))
                         //captchaSolver.report(captcha.getId());
                         logger.info("Error with the detected text from captcha: " + (failCount + 1));
 
@@ -116,25 +116,26 @@ public abstract class SPJucespTemplate {
             Iterator cellIterator = tableCell.getChildElements().iterator();
             HtmlAnchor documentLink = (HtmlAnchor) cellIterator.next();
             String nire = documentLink.getVisibleText();
-            if (nire == "") {
+
+            if (ObjectUtils.isEmpty(nire)) {
                 throw new CannotGetJucespFileException("No NIRE found for this social reason");
             } else {
                 HtmlPage pageResult = getPageFromNire(nire);
                 flag = true;
+                HtmlTable documentsTable;
                 while (flag && failCount < capFail) {
                     captcha = getCaptcha(pageResult);
                     if (captcha != null) {
-                        /*Nuevo*/
                         captcha1Input = pageResult.getFirstByXPath("//input[@name='ctl00$cphContent$frmPreVisualiza$CaptchaControl1']");
                         captcha1Input.setText(captcha);
                         captcha1SubmitInput = (HtmlSubmitInput) pageResult.getElementById("ctl00_cphContent_frmPreVisualiza_btEntrar");
                         captcha1Form = captcha1SubmitInput.getEnclosingForm();
 
                         pageResult = webClient.getPage(captcha1Form.getWebRequest(captcha1SubmitInput));
-                        HtmlTable documentsTable = (HtmlTable) pageResult.getElementById(
-                                "ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
+                        documentsTable = (HtmlTable) pageResult.getElementById("ctl00_cphContent_frmPreVisualiza_rblTipoDocumento");
+
                         if (Objects.isNull(documentsTable)) {
-                            logger.info("Error with the detected text from captcha second page: " + (failCount + 1));
+                            logger.info(String.format("Error with the detected text from captcha second page: %s", (failCount + 1)));
 
                             failCount++;
                             Thread.sleep(3000L + r.nextInt(2000));
@@ -142,7 +143,6 @@ public abstract class SPJucespTemplate {
                             results = getDocuments(pageResult);
                             flag = false;
                         }
-                        /*Fin nuevo*/
                     } else {
                         results = getDocuments(pageResult);
                         flag = false;
