@@ -18,9 +18,9 @@ public class MainApplication {
         if (args.length > 0) {
             String socialReason = args[0];
             SPJucespBot spJucespBot = new SPJucespBot(new SPJucespBuilderImpl());
-            InputStream find1 = spJucespBot.getRegistrationForm(socialReason);
-            InputStream find2 = spJucespBot.getSimplifiedCertification(socialReason);
             List<DocumentMetadata> find3 = spJucespBot.getArchivedDocuments(socialReason);
+            //InputStream find1 = spJucespBot.getRegistrationForm(socialReason);
+            //InputStream find2 = spJucespBot.getSimplifiedCertification(socialReason);
         }
     }
 }
