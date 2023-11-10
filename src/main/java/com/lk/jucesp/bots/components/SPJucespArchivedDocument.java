@@ -43,7 +43,6 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
     protected String getUrlHomePage() {
         return "https://www.jucesponline.sp.gov.br";
     }
-    //"https://www.jucesponline.sp.gov.br/Pesquisa.aspx?IDProduto=12"
 
     @Override
     protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException, InterruptedException {
@@ -59,7 +58,6 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 documentType = selectDocumentType(htmlPage);
                 loginPage = doLogin(documentType);
                 fillAllDocs(loginPage, results);
-
                 if (!ObjectUtils.isEmpty(htmlPage.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText"))) {
                     hiddenInput = (HtmlHiddenInput) htmlPage.getElementById("__EVENTTARGET");
                     submitForm = hiddenInput.getEnclosingForm();
@@ -77,11 +75,11 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
         return results;
     }
 
-    private void fillAllDocs(HtmlPage htmlPage, List<DocumentMetadata> results) throws IOException {
+    private void fillAllDocs(HtmlPage htmlPage, List<DocumentMetadata> results) throws IOException, InterruptedException {
         HtmlTable documentsTable = (HtmlTable) htmlPage.getElementById(
                 "ctl00_cphContent_GdvArquivamento_gdvContent");
         HtmlSubmitInput continueSubmitButton = (HtmlSubmitInput) htmlPage.getElementById(
-                "ctl00_cphContent_btnContinuar");
+                "ctl00_cphContent_btnContinuar");//ctl00_cphContent_btnContinuar
         HtmlForm submitForm = continueSubmitButton.getEnclosingForm();
         Iterator iteratorTable = documentsTable.getChildElements().iterator();
         HtmlTableBody tableBody = (HtmlTableBody) iteratorTable.next();
@@ -184,7 +182,7 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 captcha1Form2 = enterSubmitButton.getEnclosingForm();
                 pageResult = webClient.getPage(captcha1Form2.getWebRequest(enterSubmitButton));
 
-                if (ObjectUtils.isEmpty(pageResult.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText"))) {
+                if (pageResult.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText") != null) {
                     flag = false;
                 } else {
                     logger.info(String.format("Other error for the captcha in the login page: %s", (failCount + 1)));
