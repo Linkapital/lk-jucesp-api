@@ -1,9 +1,16 @@
 package com.lk.jucesp.bots.components;
 
 
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.UnexpectedPage;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.html.HTMLAnchorElement;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -11,19 +18,21 @@ import java.util.List;
 public class SPJucespBot implements JucespBot {
 
     private final SPJucespBuilder jucespBuilder;
+    private String nire;
 
     public SPJucespBot(SPJucespBuilder jucespBuilder) {
         this.jucespBuilder = jucespBuilder;
+        this.nire = "";
     }
 
     @Override
-    public InputStream getRegistrationForm(String socialReason) throws CannotGetJucespFileException {
-        List<DocumentMetadata> metadataList = jucespBuilder.createJucespRegistration().getDocuments(socialReason);
-        if (metadataList.isEmpty()) {
-            throw new CannotGetJucespFileException("Empty list result");
+    public InputStream getRegistrationForm(String nire) throws CannotGetJucespFileException, IOException {
+        Page page = jucespBuilder.createJucespRegistration().getDocument(nire);
+        if (page instanceof UnexpectedPage) {
+            throw new CannotGetJucespFileException("Not a valid page for registration");
         } else {
             try {
-                return metadataList.get(0).getData();
+                return page.getUrl().openStream();
             } catch (Exception e) {
                 throw new CannotGetJucespFileException(e.getMessage());
             }
@@ -31,13 +40,13 @@ public class SPJucespBot implements JucespBot {
     }
 
     @Override
-    public InputStream getSimplifiedCertification(String socialReason) throws CannotGetJucespFileException {
-        List<DocumentMetadata> metadataList = jucespBuilder.createJucespSimplifiedCertification().getDocuments(socialReason);
-        if (metadataList.isEmpty()) {
-            throw new CannotGetJucespFileException("Empty list result");
+    public InputStream getSimplifiedCertification(String nire) throws CannotGetJucespFileException, IOException {
+        Page page = jucespBuilder.createJucespSimplifiedCertification().getDocument(nire);
+        if (page instanceof UnexpectedPage) {
+            throw new CannotGetJucespFileException("Not a valid page for certification");
         } else {
             try {
-                return metadataList.get(0).getData();
+                return page.getUrl().openStream();
             } catch (Exception e) {
                 throw new CannotGetJucespFileException(e.getMessage());
             }
@@ -47,10 +56,16 @@ public class SPJucespBot implements JucespBot {
     @Override
     public List<DocumentMetadata> getArchivedDocuments(String socialReason) throws CannotGetJucespFileException {
         try {
-            return jucespBuilder.createJucespArchivedDocument().getDocuments(socialReason);
+            List<DocumentMetadata> documentMetadataList = jucespBuilder.createJucespArchivedDocument().getDocuments(socialReason);
+            nire = jucespBuilder.createJucespArchivedDocument().getNire();
+            return documentMetadataList;
         } catch (Exception e) {
             throw new CannotGetJucespFileException(e.getMessage());
         }
+    }
+
+    public String getNire(){
+        return this.nire;
     }
 
 }
