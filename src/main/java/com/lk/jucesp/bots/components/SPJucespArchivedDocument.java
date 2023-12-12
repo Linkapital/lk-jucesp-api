@@ -15,7 +15,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
-import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 documentType = selectDocumentType(htmlPage);
                 loginPage = doLogin(documentType);
                 fillAllDocs(loginPage, results);
-                if (!ObjectUtils.isEmpty(htmlPage.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText"))) {
+                if (htmlPage.getElementById("ctl00_cphContent_GdvArquivamento_pgrGridView_btrNext_lbtText") != null) {
                     hiddenInput = (HtmlHiddenInput) htmlPage.getElementById("__EVENTTARGET");
                     submitForm = hiddenInput.getEnclosingForm();
                     hiddenInput.setAttribute("value", "ctl00$cphContent$GdvArquivamento$pgrGridView$btrNext$lbtText");
@@ -108,7 +107,7 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
                 radioButtonInput.setChecked(true);
                 documentPage = webClient.getPage(submitForm.getWebRequest(continueSubmitButton));
                 results.add(new DocumentMetadata(dateCell.getTextContent(),
-                        ObjectUtils.isEmpty(descriptionSpan.getTextContent())
+                        descriptionSpan.getTextContent() == null
                         ? null
                         : descriptionSpan.getTextContent().substring(0, Math.min(50, descriptionSpan.getTextContent().length())),
                         documentPage.getInputStream()));

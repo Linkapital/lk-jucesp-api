@@ -24,7 +24,6 @@ import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
 import com.lk.jucesp.bots.util.DetectText;
 import com.lk.jucesp.bots.util.ImageTools;
-import org.springframework.util.ObjectUtils;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
@@ -94,7 +93,7 @@ public abstract class SPJucespTemplate {
                     page = webClient.getPage(captcha1Form.getWebRequest(captcha1SubmitInput));
                     resultTable = (HtmlTable) page.getElementById("ctl00_cphContent_gdvResultadoBusca_gdvContent");
 
-                    if (ObjectUtils.isEmpty(resultTable))
+                    if (resultTable == null)
                         logger.info("Error with the detected text from captcha: " + (failCount + 1));
 
                     failCount++;
@@ -118,7 +117,7 @@ public abstract class SPJucespTemplate {
             HtmlAnchor documentLink = (HtmlAnchor) cellIterator.next();
             nire = documentLink.getVisibleText();
 
-            if (ObjectUtils.isEmpty(nire)) {
+            if (nire == null) {
                 throw new CannotGetJucespFileException("No NIRE found for this social reason");
             } else {
                 HtmlPage pageResult = getPageFromNire(nire);

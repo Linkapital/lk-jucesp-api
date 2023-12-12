@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework:spring-context:6.1.1'
     implementation 'net.sourceforge.htmlunit:htmlunit:2.70.0'
     implementation files('libs/captcha-0.0.1.jar')
     implementation 'software.amazon.awssdk:rekognition:2.21.42'
@@ -25,6 +26,7 @@ dependencies {
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+    exclude 'org/slf4j/**' //Excluye todo el paquete de SLF4J para evitar conflicto con otra api de spring boot 3.2.0
     manifest {
         attributes 'Main-Class': 'com.lk.jucesp.bots.MainApplication'
     }
