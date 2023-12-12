@@ -24,6 +24,8 @@ import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
 import com.lk.jucesp.bots.util.DetectText;
 import com.lk.jucesp.bots.util.ImageTools;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.util.ObjectUtils;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -49,10 +51,12 @@ public abstract class SPJucespTemplate {
     protected final WebClient webClient;
     private final ImageTools imageTools;
     private final String localFile = "captcha.jpg";
+    private String nire;
 
     protected SPJucespTemplate() {
         this.webClient = new WebClient();
         this.imageTools = new ImageTools();
+        this.nire = "";
     }
 
     public List<DocumentMetadata> getDocuments(String socialReason) throws CannotGetJucespFileException {
@@ -93,7 +97,6 @@ public abstract class SPJucespTemplate {
                     resultTable = (HtmlTable) page.getElementById("ctl00_cphContent_gdvResultadoBusca_gdvContent");
 
                     if (ObjectUtils.isEmpty(resultTable))
-                        //captchaSolver.report(captcha.getId());
                         logger.info("Error with the detected text from captcha: " + (failCount + 1));
 
                     failCount++;
@@ -115,7 +118,7 @@ public abstract class SPJucespTemplate {
             HtmlTableCell tableCell = row.getCell(0);
             Iterator cellIterator = tableCell.getChildElements().iterator();
             HtmlAnchor documentLink = (HtmlAnchor) cellIterator.next();
-            String nire = documentLink.getVisibleText();
+            nire = documentLink.getVisibleText();
 
             if (ObjectUtils.isEmpty(nire)) {
                 throw new CannotGetJucespFileException("No NIRE found for this social reason");
@@ -161,10 +164,18 @@ public abstract class SPJucespTemplate {
         return results;
     }
 
+    public String getNire(){
+        return this.nire;
+    }
+
     protected abstract String getUrlHomePage();
 
     protected Page getDocumentPage(HtmlAnchor documentLink) throws IOException {
         return documentLink.click();
+    }
+
+    protected Page getDocument(String url) throws IOException {
+        return webClient.getPage(url);
     }
 
     protected HtmlPage getPageFromNire(String nire) throws IOException {
