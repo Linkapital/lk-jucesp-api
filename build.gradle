@@ -18,7 +18,6 @@ repositories {
 
 dependencies {
     implementation 'net.sourceforge.htmlunit:htmlunit:2.70.0'
-    implementation 'junit:junit:4.13.2'
     implementation files('libs/captcha-0.0.1.jar')
     implementation 'software.amazon.awssdk:rekognition:2.21.42'
 }
