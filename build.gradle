@@ -17,15 +17,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework:spring-beans:6.1.1'
-    implementation 'org.springframework:spring-context:6.1.1'
     implementation 'net.sourceforge.htmlunit:htmlunit:2.70.0'
     implementation 'junit:junit:4.13.2'
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     implementation files('libs/captcha-0.0.1.jar')
-    compileOnly 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    implementation 'software.amazon.awssdk:rekognition:2.20.109'
+    implementation 'software.amazon.awssdk:rekognition:2.21.42'
 }
 
 jar {

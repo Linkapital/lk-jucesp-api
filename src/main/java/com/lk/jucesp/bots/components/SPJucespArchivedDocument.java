@@ -107,13 +107,11 @@ public class SPJucespArchivedDocument extends SPJucespTemplate {
             if (element instanceof HtmlRadioButtonInput radioButtonInput) {
                 radioButtonInput.setChecked(true);
                 documentPage = webClient.getPage(submitForm.getWebRequest(continueSubmitButton));
-                results.add(DocumentMetadata.builder()
-                        .data(documentPage.getInputStream())
-                        .date(dateCell.getTextContent())
-                        .description(ObjectUtils.isEmpty(descriptionSpan.getTextContent())
-                                     ? null
-                                     : descriptionSpan.getTextContent().substring(0, Math.min(50, descriptionSpan.getTextContent().length())))
-                        .build());
+                results.add(new DocumentMetadata(dateCell.getTextContent(),
+                        ObjectUtils.isEmpty(descriptionSpan.getTextContent())
+                        ? null
+                        : descriptionSpan.getTextContent().substring(0, Math.min(50, descriptionSpan.getTextContent().length())),
+                        documentPage.getInputStream()));
             }
         }
     }

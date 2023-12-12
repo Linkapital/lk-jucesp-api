@@ -1,8 +1,5 @@
 package com.lk.jucesp.bots.util;
 
-import lombok.AllArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
 import javax.imageio.ImageIO;
@@ -15,11 +12,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@AllArgsConstructor
-@Slf4j
-@Setter
 public class ImageTools {
+
+    Logger logger = Logger.getLogger(ImageTools.class.getName());
 
     public BufferedImage redimensionImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
         BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
@@ -43,7 +41,7 @@ public class ImageTools {
 
             fos.write(out.toByteArray());
         } catch (Exception e) {
-            log.error(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -54,7 +52,7 @@ public class ImageTools {
             File outputfile = new File(urlParam);
             ImageIO.write(modified, "jpg", outputfile);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
         }
     }
 }

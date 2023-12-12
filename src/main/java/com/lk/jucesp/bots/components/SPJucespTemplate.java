@@ -181,12 +181,9 @@ public abstract class SPJucespTemplate {
     }
 
     protected List<DocumentMetadata> getDocuments(Page pageResult) throws IOException, InterruptedException {
-        ArrayList<DocumentMetadata> results = new ArrayList<DocumentMetadata>();
+        ArrayList<DocumentMetadata> results = new ArrayList<>();
         if (pageResult instanceof UnexpectedPage unexpected)
-            results.add(DocumentMetadata
-                    .builder()
-                    .data(unexpected.getInputStream())
-                    .build());
+            results.add(new DocumentMetadata(unexpected.getInputStream()));
 
         return results;
     }

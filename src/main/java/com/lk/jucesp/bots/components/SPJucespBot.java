@@ -1,6 +1,5 @@
 package com.lk.jucesp.bots.components;
 
-
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.UnexpectedPage;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
@@ -14,11 +13,9 @@ import java.util.List;
 public class SPJucespBot implements JucespBot {
 
     private final SPJucespBuilder jucespBuilder;
-    private String nire;
 
     public SPJucespBot(SPJucespBuilder jucespBuilder) {
         this.jucespBuilder = jucespBuilder;
-        this.nire = "";
     }
 
     @Override
@@ -52,16 +49,10 @@ public class SPJucespBot implements JucespBot {
     @Override
     public List<DocumentMetadata> getArchivedDocuments(String socialReason) throws CannotGetJucespFileException {
         try {
-            List<DocumentMetadata> documentMetadataList = jucespBuilder.createJucespArchivedDocument().getDocuments(socialReason);
-            nire = jucespBuilder.createJucespArchivedDocument().getNire();
-            return documentMetadataList;
+            return jucespBuilder.createJucespArchivedDocument().getDocuments(socialReason);
         } catch (Exception e) {
             throw new CannotGetJucespFileException(e.getMessage());
         }
-    }
-
-    public String getNire() {
-        return this.nire;
     }
 
 }
