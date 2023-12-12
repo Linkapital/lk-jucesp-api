@@ -36,7 +36,7 @@ public class SPJucespSimplifiedCertification extends SPJucespTemplate {
     @Override
     public Page getDocument(String nireCode) throws IOException {
         String newUrl = "https://www.jucesponline.sp.gov.br/login.aspx?ReturnUrl=%2fRestricted%2fGeraDocumento.aspx%3fnire%3d"
-                + nireCode + "%26tipoDocumento%3d4&nire=" + nireCode + "&tipoDocumento=4";
+                        + nireCode + "%26tipoDocumento%3d4&nire=" + nireCode + "&tipoDocumento=4";
 
         return webClient.getPage(newUrl);
     }

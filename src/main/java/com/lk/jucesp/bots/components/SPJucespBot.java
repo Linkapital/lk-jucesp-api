@@ -4,12 +4,8 @@ package com.lk.jucesp.bots.components;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.UnexpectedPage;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
-import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.html.HTMLAnchorElement;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -64,7 +60,7 @@ public class SPJucespBot implements JucespBot {
         }
     }
 
-    public String getNire(){
+    public String getNire() {
         return this.nire;
     }
 

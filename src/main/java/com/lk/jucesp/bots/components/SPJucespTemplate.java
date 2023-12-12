@@ -24,8 +24,6 @@ import com.gargoylesoftware.htmlunit.javascript.JavaScriptErrorListener;
 import com.lk.jucesp.bots.exceptions.CannotGetJucespFileException;
 import com.lk.jucesp.bots.util.DetectText;
 import com.lk.jucesp.bots.util.ImageTools;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.util.ObjectUtils;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -164,7 +162,7 @@ public abstract class SPJucespTemplate {
         return results;
     }
 
-    public String getNire(){
+    public String getNire() {
         return this.nire;
     }
 
