@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="710002b4-be64-433b-85ba-2b0d1e89ab66" name="Changes" comment="refactors" />
+    <list default="true" id="710002b4-be64-433b-85ba-2b0d1e89ab66" name="Changes" comment="refactors">
+      <change beforePath="$PROJECT_DIR$/.idea/modules/jucesp-bot.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/jucesp-bot.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/jucesp-bot.test.iml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,15 +45,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "contexts": [
+  <component name="KubernetesApiProvider">{
+  &quot;contexts&quot;: [
     {
-      "name": "minikube",
-      "originalNamespace": "default"
+      &quot;name&quot;: &quot;minikube&quot;,
+      &quot;originalNamespace&quot;: &quot;default&quot;
     }
   ],
-  "isMigrated": true
-}]]></component>
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="KubernetesSettings">
     <option name="contextName" value="minikube" />
   </component>
@@ -72,14 +76,14 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/odelr/Documents/Proyects/linkapital-jucesp-bot",
+    "last_opened_file_path": "C:/Users/odelr/Documents/Proyects/lk-microservices/lk-jucesp-api/build/libs/jucesp-0.0.1.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Problems",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.6",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "spring.configuration.checksum": "a8c96ec9f317c020fde618b02431c48f",
     "vue.rearranger.settings.migration": "true"
@@ -93,7 +97,7 @@
       <recent name="com.linkapital.jucesp.bots" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.linkapital-jucesp-bot [jar]">
+  <component name="RunManager" selected="Gradle.linkapital-jucesp-bot [build]">
     <configuration name="linkapital-jucesp-bot [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -166,10 +170,23 @@
         <option name="region" />
         <option name="useCurrentConnection" value="false" />
       </extension>
-      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/jucesp-bot-0.0.1-SNAPSHOT.jar" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\odelr\Documents\Proyects\linkapital-jucesp-bot" />
+      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/jucesp-0.0.1.jar" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\odelr\Documents\Proyects\lk-microservices\lk-jucesp-api" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="jucesp-bot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="jucesp-bot" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <list>
       <item itemvalue="Gradle.linkapital-jucesp-bot [jar]" />
@@ -203,6 +220,7 @@
       <workItem from="1666027914185" duration="239000" />
       <workItem from="1666731848639" duration="8000" />
       <workItem from="1699463805084" duration="2316000" />
+      <workItem from="1702407682741" duration="492000" />
     </task>
     <task id="LOCAL-00001" summary="refactors">
       <option name="closed" value="true" />
